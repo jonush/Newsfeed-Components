@@ -85,30 +85,71 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: 'COVID-19',
+    date: 'April 8th, 2020',
+    firstParagraph: `corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona`,
+    secondParagraph: `corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona`,
+    thirdParagraph: `corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona corona`
   }
 ];
 
-/* Step 1: Create a function that creates a component. You will want your component to look like the template below: 
+// Step 1: Create a function that creates a component. You will want your component to look like the template below: 
   
-  <div class="article">
-    <h2>{title of the article}</h2>
-    <p class="date">{date of the article}</p>
+//   <div class="article">
+//     <h2>{title of the article}</h2>
+//     <p class="date">{date of the article}</p>
 
-    {three separate paragraph elements}
+//     {three separate paragraph elements}
 
-    <span class='expandButton'></span>
-  </div>
+//     <span class='expandButton'></span>
+//   </div>
 
-  Hint: You will need to use createElement more than once here!
+//   Hint: You will need to use createElement more than once here!
 
-  Your function should take either an object as it's one argument, or 5 separate arguments mapping to each piece of the data object above.
+//   Your function should take either an object as it's one argument, or 5 separate arguments mapping to each piece of the data object above.
+const articles = document.querySelector('.articles');
 
-  Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
+function articleMaker({ title, date, firstParagraph, secondParagraph, thirdParagraph }) {
 
-  Step 3: return the entire component.
+  const article = document.createElement('div');
+  const articleTitle = document.createElement('h2');
+  const articleDate = document.createElement('p');
+  const p1 = document.createElement('p');
+  const p2 = document.createElement('p');
+  const p3 = document.createElement('p');
+  const expandButton = document.createElement('span');
 
-  Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
+  article.appendChild(articleTitle);
+  article.appendChild(articleDate);
+  article.appendChild(p1);
+  article.appendChild(p2);
+  article.appendChild(p3);
+  article.appendChild(expandButton);
 
-  Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
+  articleTitle.textContent = title;
+  articleDate.setAttribute('class', date);
+  articleDate.textContent = date;
+  p1.textContent = firstParagraph;
+  p2.textContent = secondParagraph;
+  p3.textContent = thirdParagraph;
+  expandButton.setAttribute('class', expandButton);
 
-*/
+// Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
+  expandButton.addEventListener('click', event => {
+    article.classList.toggle('article-open');
+  });
+
+// Step 3: return the entire component.
+  return article;
+}
+// Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
+const articleItems = data.map(data => articleMaker(data));
+
+articleItems.forEach(item => {
+  articles.appendChild(item);
+});
+
+// Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
+
