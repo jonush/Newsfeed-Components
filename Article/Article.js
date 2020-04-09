@@ -120,6 +120,9 @@ function articleMaker({ title, date, firstParagraph, secondParagraph, thirdParag
   const p2 = document.createElement('p');
   const p3 = document.createElement('p');
   const expandButton = document.createElement('span');
+  // STRETCH GOAL
+  const closeButton = document.createElement('button');
+  const restore = document.createElement('button');
 
   article.appendChild(articleTitle);
   article.appendChild(articleDate);
@@ -127,23 +130,50 @@ function articleMaker({ title, date, firstParagraph, secondParagraph, thirdParag
   article.appendChild(p2);
   article.appendChild(p3);
   article.appendChild(expandButton);
+  // STRETCH GOAL
+  article.appendChild(closeButton);
+  articles.appendChild(restore);
 
+  article.setAttribute('class', 'article');
   articleTitle.textContent = title;
-  articleDate.setAttribute('class', date);
+  articleDate.setAttribute('class', 'date');
   articleDate.textContent = date;
   p1.textContent = firstParagraph;
   p2.textContent = secondParagraph;
   p3.textContent = thirdParagraph;
-  expandButton.setAttribute('class', expandButton);
+  expandButton.setAttribute('class', 'expandButton');
+  expandButton.textContent= 'Click to Expand';
+  // STRETCH GOAL
+  closeButton.setAttribute('class', 'close');
+  closeButton.textContent = 'X';
+  restore.setAttribute('class', 'toggle');
+  restore.textContent = 'Restore All';
 
 // Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
   expandButton.addEventListener('click', event => {
     article.classList.toggle('article-open');
+
+    if(article.classList.contains('article-open')){
+      expandButton.textContent = "Click to Close";
+    } else {
+      expandButton.textContent= 'Click to Expand';
+    }
   });
+
+  // STRETCH GOAL
+  closeButton.addEventListener('click', event => {
+    article.style.display = 'none';
+    restore.classList.remove('toggle');
+    restore.setAttribute('class', 'restore');
+  });
+
+  restore.addEventListener('click', event => {
+    window.location.reload();
+  })
 
 // Step 3: return the entire component.
   return article;
-}
+};
 // Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
 const articleItems = data.map(data => articleMaker(data));
 
